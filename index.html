@@ -153,6 +153,10 @@
             text-transform: uppercase;
         }
     </style>
+    <style>
+        .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+        .no-scrollbar::-webkit-scrollbar{display:none}
+    </style>
 </head>
 <body>
 <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 top-0 bg-transparent text-white">
@@ -386,37 +390,62 @@
                     <h3 class="text-3xl md:text-4xl font-bold text-dark">فيديوهات من مشاريعنا</h3>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
-                    <div class="rounded-2xl overflow-hidden shadow-lg bg-dark">
-                        <video class="w-full aspect-[9/16] object-cover bg-black" controls preload="none" playsinline poster="poster1.jpg">
-                            <source src="video1.mp4" type="video/mp4">
-                            متصفحك لا يدعم تشغيل الفيديو.
-                        </video>
-                    </div>
-                    <div class="rounded-2xl overflow-hidden shadow-lg bg-dark">
-                        <video class="w-full aspect-[9/16] object-cover bg-black" controls preload="none" playsinline poster="poster2.jpg">
-                            <source src="video2.mp4" type="video/mp4">
-                            متصفحك لا يدعم تشغيل الفيديو.
-                        </video>
-                    </div>
-                    <div class="rounded-2xl overflow-hidden shadow-lg bg-dark">
-                        <video class="w-full aspect-[9/16] object-cover bg-black" controls preload="none" playsinline poster="poster3.jpg">
-                            <source src="video3.mp4" type="video/mp4">
-                            متصفحك لا يدعم تشغيل الفيديو.
-                        </video>
-                    </div>
-                    <div class="rounded-2xl overflow-hidden shadow-lg bg-dark">
-                        <video class="w-full aspect-[9/16] object-cover bg-black" controls preload="none" playsinline poster="poster4.jpg">
-                            <source src="video4.mp4" type="video/mp4">
-                            متصفحك لا يدعم تشغيل الفيديو.
-                        </video>
-                    </div>
-                    <div class="rounded-2xl overflow-hidden shadow-lg bg-dark">
-                        <video class="w-full aspect-[9/16] object-cover bg-black" controls preload="none" playsinline poster="poster5.jpg">
-                            <source src="video5.mp4" type="video/mp4">
-                            متصفحك لا يدعم تشغيل الفيديو.
-                        </video>
-                    </div>
+                <div class="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 no-scrollbar lg:mx-0 lg:px-0 lg:pb-0 lg:grid lg:grid-cols-5 lg:gap-6 lg:overflow-visible">
+                    <button type="button" class="video-card group relative flex-none w-[62%] sm:w-[40%] md:w-[30%] lg:w-auto snap-center aspect-[9/16] rounded-2xl overflow-hidden shadow-lg bg-dark focus:outline-none focus-visible:ring-4 focus-visible:ring-gold/60" data-video="video1.mp4" data-poster="poster1.jpg" aria-label="تشغيل الفيديو رقم 1">
+                        <img src="poster1.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110">
+                        <span class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30 transition-opacity duration-300 group-hover:opacity-80"></span>
+                        <span class="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs font-en px-2.5 py-1 rounded-full">0:37</span>
+                        <span class="absolute inset-0 flex items-center justify-center">
+                            <span class="w-16 h-16 rounded-full bg-gold/90 text-white flex items-center justify-center shadow-xl ring-4 ring-white/25 transition-all duration-300 group-hover:scale-110 group-hover:bg-gold">
+                                <i class="fa-solid fa-play text-xl ml-1"></i>
+                            </span>
+                        </span>
+                        <span class="absolute bottom-0 inset-x-0 h-1 bg-gold origin-right scale-x-0 transition-transform duration-500 group-hover:scale-x-100"></span>
+                    </button>
+                    <button type="button" class="video-card group relative flex-none w-[62%] sm:w-[40%] md:w-[30%] lg:w-auto snap-center aspect-[9/16] rounded-2xl overflow-hidden shadow-lg bg-dark focus:outline-none focus-visible:ring-4 focus-visible:ring-gold/60" data-video="video2.mp4" data-poster="poster2.jpg" aria-label="تشغيل الفيديو رقم 2">
+                        <img src="poster2.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110">
+                        <span class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30 transition-opacity duration-300 group-hover:opacity-80"></span>
+                        <span class="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs font-en px-2.5 py-1 rounded-full">0:39</span>
+                        <span class="absolute inset-0 flex items-center justify-center">
+                            <span class="w-16 h-16 rounded-full bg-gold/90 text-white flex items-center justify-center shadow-xl ring-4 ring-white/25 transition-all duration-300 group-hover:scale-110 group-hover:bg-gold">
+                                <i class="fa-solid fa-play text-xl ml-1"></i>
+                            </span>
+                        </span>
+                        <span class="absolute bottom-0 inset-x-0 h-1 bg-gold origin-right scale-x-0 transition-transform duration-500 group-hover:scale-x-100"></span>
+                    </button>
+                    <button type="button" class="video-card group relative flex-none w-[62%] sm:w-[40%] md:w-[30%] lg:w-auto snap-center aspect-[9/16] rounded-2xl overflow-hidden shadow-lg bg-dark focus:outline-none focus-visible:ring-4 focus-visible:ring-gold/60" data-video="video3.mp4" data-poster="poster3.jpg" aria-label="تشغيل الفيديو رقم 3">
+                        <img src="poster3.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110">
+                        <span class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30 transition-opacity duration-300 group-hover:opacity-80"></span>
+                        <span class="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs font-en px-2.5 py-1 rounded-full">2:20</span>
+                        <span class="absolute inset-0 flex items-center justify-center">
+                            <span class="w-16 h-16 rounded-full bg-gold/90 text-white flex items-center justify-center shadow-xl ring-4 ring-white/25 transition-all duration-300 group-hover:scale-110 group-hover:bg-gold">
+                                <i class="fa-solid fa-play text-xl ml-1"></i>
+                            </span>
+                        </span>
+                        <span class="absolute bottom-0 inset-x-0 h-1 bg-gold origin-right scale-x-0 transition-transform duration-500 group-hover:scale-x-100"></span>
+                    </button>
+                    <button type="button" class="video-card group relative flex-none w-[62%] sm:w-[40%] md:w-[30%] lg:w-auto snap-center aspect-[9/16] rounded-2xl overflow-hidden shadow-lg bg-dark focus:outline-none focus-visible:ring-4 focus-visible:ring-gold/60" data-video="video4.mp4" data-poster="poster4.jpg" aria-label="تشغيل الفيديو رقم 4">
+                        <img src="poster4.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110">
+                        <span class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30 transition-opacity duration-300 group-hover:opacity-80"></span>
+                        <span class="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs font-en px-2.5 py-1 rounded-full">1:05</span>
+                        <span class="absolute inset-0 flex items-center justify-center">
+                            <span class="w-16 h-16 rounded-full bg-gold/90 text-white flex items-center justify-center shadow-xl ring-4 ring-white/25 transition-all duration-300 group-hover:scale-110 group-hover:bg-gold">
+                                <i class="fa-solid fa-play text-xl ml-1"></i>
+                            </span>
+                        </span>
+                        <span class="absolute bottom-0 inset-x-0 h-1 bg-gold origin-right scale-x-0 transition-transform duration-500 group-hover:scale-x-100"></span>
+                    </button>
+                    <button type="button" class="video-card group relative flex-none w-[62%] sm:w-[40%] md:w-[30%] lg:w-auto snap-center aspect-[9/16] rounded-2xl overflow-hidden shadow-lg bg-dark focus:outline-none focus-visible:ring-4 focus-visible:ring-gold/60" data-video="video5.mp4" data-poster="poster5.jpg" aria-label="تشغيل الفيديو رقم 5">
+                        <img src="poster5.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110">
+                        <span class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30 transition-opacity duration-300 group-hover:opacity-80"></span>
+                        <span class="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs font-en px-2.5 py-1 rounded-full">1:32</span>
+                        <span class="absolute inset-0 flex items-center justify-center">
+                            <span class="w-16 h-16 rounded-full bg-gold/90 text-white flex items-center justify-center shadow-xl ring-4 ring-white/25 transition-all duration-300 group-hover:scale-110 group-hover:bg-gold">
+                                <i class="fa-solid fa-play text-xl ml-1"></i>
+                            </span>
+                        </span>
+                        <span class="absolute bottom-0 inset-x-0 h-1 bg-gold origin-right scale-x-0 transition-transform duration-500 group-hover:scale-x-100"></span>
+                    </button>
                 </div>
             </div>
 
@@ -671,5 +700,58 @@
             }
         });
     </script>
+<!-- ===== مشغل الفيديو ===== -->
+<div id="video-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-label="مشغل الفيديو">
+    <button type="button" id="vm-close" class="absolute top-4 right-4 w-11 h-11 rounded-full bg-white/10 hover:bg-gold text-white text-xl transition" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+    <button type="button" id="vm-prev" class="absolute right-3 md:right-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-gold text-white transition" aria-label="الفيديو السابق"><i class="fa-solid fa-chevron-right"></i></button>
+    <button type="button" id="vm-next" class="absolute left-3 md:left-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-gold text-white transition" aria-label="الفيديو التالي"><i class="fa-solid fa-chevron-left"></i></button>
+    <video id="vm-video" class="rounded-2xl shadow-2xl bg-black" style="aspect-ratio:9/16;height:min(85vh,calc((100vw - 2rem) * 16 / 9));max-width:100%" controls playsinline></video>
+    <div id="vm-count" class="absolute bottom-4 inset-x-0 text-center text-white/80 text-sm font-en"></div>
+</div>
+
+<script>
+    (function () {
+        const cards = Array.from(document.querySelectorAll('.video-card'));
+        const modal = document.getElementById('video-modal');
+        const vid = document.getElementById('vm-video');
+        const count = document.getElementById('vm-count');
+        let cur = 0;
+
+        function openAt(i) {
+            cur = (i + cards.length) % cards.length;
+            const c = cards[cur];
+            vid.poster = c.dataset.poster;
+            vid.src = c.dataset.video;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            count.textContent = (cur + 1) + ' / ' + cards.length;
+            const p = vid.play();
+            if (p && p.catch) p.catch(function () {});
+        }
+
+        function closeModal() {
+            vid.pause();
+            vid.removeAttribute('src');
+            vid.load();
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+            if (cards[cur]) cards[cur].focus();
+        }
+
+        cards.forEach(function (c, i) { c.addEventListener('click', function () { openAt(i); }); });
+        document.getElementById('vm-close').addEventListener('click', closeModal);
+        document.getElementById('vm-next').addEventListener('click', function () { openAt(cur + 1); });
+        document.getElementById('vm-prev').addEventListener('click', function () { openAt(cur - 1); });
+        modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', function (e) {
+            if (modal.classList.contains('hidden')) return;
+            if (e.key === 'Escape') closeModal();
+            else if (e.key === 'ArrowLeft') openAt(cur + 1);
+            else if (e.key === 'ArrowRight') openAt(cur - 1);
+        });
+    })();
+</script>
 </body>
 </html>

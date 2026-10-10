@@ -144,6 +144,7 @@
         }
     </style>
 </head>
+<body>
 <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 top-0 bg-transparent text-white">
     <div class="container mx-auto px-6 lg:px-12 flex justify-between items-center">
         <!-- Logo Area - SVG Replacement for logo.jpg -->
@@ -364,6 +365,51 @@
 
             </div>
             
+            <!-- ===== فيديوهات أعمالنا السابقة ===== -->
+            <div class="mt-20">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <div class="flex items-center justify-center gap-4 mb-4">
+                        <div class="h-px w-12 bg-gold"></div>
+                        <h2 class="text-gold font-bold text-xl tracking-wider">شاهد أعمالنا</h2>
+                        <div class="h-px w-12 bg-gold"></div>
+                    </div>
+                    <h3 class="text-3xl md:text-4xl font-bold text-dark">فيديوهات من مشاريعنا</h3>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+                    <div class="rounded-2xl overflow-hidden shadow-lg bg-dark">
+                        <video class="w-full aspect-[9/16] object-cover bg-black" controls preload="none" playsinline poster="poster1.jpg">
+                            <source src="video1.mp4" type="video/mp4">
+                            متصفحك لا يدعم تشغيل الفيديو.
+                        </video>
+                    </div>
+                    <div class="rounded-2xl overflow-hidden shadow-lg bg-dark">
+                        <video class="w-full aspect-[9/16] object-cover bg-black" controls preload="none" playsinline poster="poster2.jpg">
+                            <source src="video2.mp4" type="video/mp4">
+                            متصفحك لا يدعم تشغيل الفيديو.
+                        </video>
+                    </div>
+                    <div class="rounded-2xl overflow-hidden shadow-lg bg-dark">
+                        <video class="w-full aspect-[9/16] object-cover bg-black" controls preload="none" playsinline poster="poster3.jpg">
+                            <source src="video3.mp4" type="video/mp4">
+                            متصفحك لا يدعم تشغيل الفيديو.
+                        </video>
+                    </div>
+                    <div class="rounded-2xl overflow-hidden shadow-lg bg-dark">
+                        <video class="w-full aspect-[9/16] object-cover bg-black" controls preload="none" playsinline poster="poster4.jpg">
+                            <source src="video4.mp4" type="video/mp4">
+                            متصفحك لا يدعم تشغيل الفيديو.
+                        </video>
+                    </div>
+                    <div class="rounded-2xl overflow-hidden shadow-lg bg-dark">
+                        <video class="w-full aspect-[9/16] object-cover bg-black" controls preload="none" playsinline poster="poster5.jpg">
+                            <source src="video5.mp4" type="video/mp4">
+                            متصفحك لا يدعم تشغيل الفيديو.
+                        </video>
+                    </div>
+                </div>
+            </div>
+
             <div class="mt-12 text-center">
                 <a href="#contact" class="inline-flex items-center justify-center gap-3 bg-dark hover:bg-black text-white px-8 py-4 rounded-full font-bold text-lg transition duration-300 shadow-lg">
                     ابدأ مشروعك معنا الآن
@@ -569,7 +615,9 @@
                 btn.innerHTML = originalText;
                 btn.disabled = false;
                 const errorMsg = document.getElementById('errorMsg');
-                errorMsg.textContent = `تعذر إرسال الطلب: ${error.message || 'حاول مرة أخرى.'}`;
+                errorMsg.textContent = location.protocol === 'file:'
+                    ? 'الفورم بيشتغل بس بعد رفع الموقع على استضافة (مش من الملف على الجهاز).'
+                    : `تعذر إرسال الطلب: ${error.message || 'حاول مرة أخرى.'}`;
                 errorMsg.classList.remove('hidden');
             });
         });
@@ -600,21 +648,16 @@
             });
         });
 
-        // Navbar blur, shrink effect, and logo resize on scroll
+        // Navbar blur, shrink effect on scroll
         const nav = document.querySelector('nav');
-        const navContainer = document.getElementById('nav-container');
         
         window.addEventListener('scroll', () => {
             if (window.scrollY > 20) {
                 nav.classList.add('shadow-md', 'scrolled');
                 nav.style.background = 'rgba(255, 255, 255, 0.98)';
-                navContainer.classList.remove('h-28');
-                navContainer.classList.add('h-20');
             } else {
                 nav.classList.remove('shadow-md', 'scrolled');
                 nav.style.background = 'rgba(255, 255, 255, 0.95)';
-                navContainer.classList.remove('h-20');
-                navContainer.classList.add('h-28');
             }
         });
     </script>

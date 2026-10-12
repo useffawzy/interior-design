@@ -26,9 +26,19 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <script>
+        /* الوضع الليلي: يتحدد قبل ما الصفحة تترسم عشان ما يحصلش وميض */
+        try {
+            var _t = localStorage.getItem('theme');
+            if (_t === 'dark' || (!_t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        } catch (e) {}
+    </script>
     <!-- Tailwind Configuration -->
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -52,11 +62,19 @@
         html {
             scroll-behavior: smooth;
         }
+        :root { --nav-bg: rgba(255,255,255,0.95); --nav-bg-scrolled: rgba(255,255,255,0.98); }
+        html.dark { color-scheme: dark; --nav-bg: rgba(17,17,17,0.92); --nav-bg-scrolled: rgba(17,17,17,0.97); }
         body {
             font-family: 'Cairo', sans-serif;
             background-color: #fcfcfc;
             color: #333;
+            transition: background-color .3s ease, color .3s ease;
         }
+        html.dark body { background-color: #111111; color: #e5e5e5; }
+        #navbar { background: var(--nav-bg); backdrop-filter: blur(10px); }
+        #navbar.scrolled { background: var(--nav-bg-scrolled); }
+        html.dark ::-webkit-scrollbar-track { background: #1a1a1a; }
+        html.dark .card-hover:hover { box-shadow: 0 20px 25px -5px rgba(0,0,0,.5), 0 10px 10px -5px rgba(0,0,0,.35); }
         .hero-bg {
             background-image: linear-gradient(rgba(17, 17, 17, 0.75), rgba(17, 17, 17, 0.75)), url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
@@ -195,34 +213,42 @@
                 <path d="M5 110 Q 100 150, 200 120 T 395 130 Q 300 120, 200 135 T 5 110 z" fill="url(#goldGradient)" />
             </svg>
             <div class="text-center mt-[-10px]">
-                <span class="block text-2xl font-bold tracking-widest text-[#1a1a1a] drop-shadow-md transition-colors duration-300" id="logo-text-main" style="font-family: 'Times New Roman', serif;">E l K h o l y</span>
-                <span class="block text-xs tracking-[0.2em] text-gray-500 uppercase mt-1 transition-colors duration-300" id="logo-text-sub">Interior Design</span>
+                <span class="block text-2xl font-bold tracking-widest text-[#1a1a1a] drop-shadow-md transition-colors duration-300 dark:text-white" id="logo-text-main" style="font-family: 'Times New Roman', serif;">E l K h o l y</span>
+                <span class="block text-xs tracking-[0.2em] text-gray-500 uppercase mt-1 transition-colors duration-300 dark:text-gray-400" id="logo-text-sub">Interior Design</span>
             </div>
         </a>
 
         <!-- Desktop Menu -->
         <div class="hidden md:flex space-x-8 space-x-reverse items-center">
-                <a href="#home" class="text-gray-800 hover:text-gold font-semibold transition duration-300 text-lg">الرئيسية</a>
-                <a href="#services" class="text-gray-800 hover:text-gold font-semibold transition duration-300 text-lg">خدماتنا</a>
-                <a href="#portfolio" class="text-gray-800 hover:text-gold font-semibold transition duration-300 text-lg">أعمالنا</a>
-                <a href="#contact" class="text-gray-800 hover:text-gold font-semibold transition duration-300 text-lg">اتصل بنا</a>
+                <a href="#home" class="text-gray-800 hover:text-gold font-semibold transition duration-300 text-lg dark:text-gray-100">الرئيسية</a>
+                <a href="#services" class="text-gray-800 hover:text-gold font-semibold transition duration-300 text-lg dark:text-gray-100">خدماتنا</a>
+                <a href="#portfolio" class="text-gray-800 hover:text-gold font-semibold transition duration-300 text-lg dark:text-gray-100">أعمالنا</a>
+                <a href="#contact" class="text-gray-800 hover:text-gold font-semibold transition duration-300 text-lg dark:text-gray-100">اتصل بنا</a>
+                <button type="button" class="theme-toggle w-10 h-10 rounded-full border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 hover:text-gold hover:border-gold dark:hover:text-gold transition flex items-center justify-center" aria-label="تبديل الوضع الفاتح والداكن" title="الوضع الفاتح / الداكن">
+                    <i class="fa-solid fa-moon dark:hidden"></i>
+                    <i class="fa-solid fa-sun hidden dark:inline-block"></i>
+                </button>
             </div>
 
             <!-- Mobile Menu Button -->
             <div class="md:hidden flex items-center">
-                <button id="mobile-menu-btn" class="text-gray-800 hover:text-gold focus:outline-none p-2">
+                <button type="button" class="theme-toggle w-10 h-10 ml-3 rounded-full border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100 hover:text-gold hover:border-gold dark:hover:text-gold transition flex items-center justify-center" aria-label="تبديل الوضع الفاتح والداكن" title="الوضع الفاتح / الداكن">
+                    <i class="fa-solid fa-moon dark:hidden"></i>
+                    <i class="fa-solid fa-sun hidden dark:inline-block"></i>
+                </button>
+                <button id="mobile-menu-btn" class="text-gray-800 hover:text-gold focus:outline-none p-2 dark:text-gray-100">
                     <i class="fa-solid fa-bars text-3xl"></i>
                 </button>
             </div>
         </div>
         
         <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-2xl pb-4">
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-2xl pb-4 dark:bg-[#161616] dark:border-gray-800">
             <div class="px-4 pt-2 pb-3 space-y-2 sm:px-3">
-                <a href="#home" class="block px-3 py-3 text-gray-800 hover:text-gold hover:bg-gray-50 font-bold rounded-md text-lg">الرئيسية</a>
-                <a href="#services" class="block px-3 py-3 text-gray-800 hover:text-gold hover:bg-gray-50 font-bold rounded-md text-lg">خدماتنا</a>
-                <a href="#portfolio" class="block px-3 py-3 text-gray-800 hover:text-gold hover:bg-gray-50 font-bold rounded-md text-lg">أعمالنا</a>
-                <a href="#contact" class="block px-3 py-3 text-gray-800 hover:text-gold hover:bg-gray-50 font-bold rounded-md text-lg">اتصل بنا</a>
+                <a href="#home" class="block px-3 py-3 text-gray-800 hover:text-gold hover:bg-gray-50 font-bold rounded-md text-lg dark:hover:bg-gray-800 dark:text-gray-100">الرئيسية</a>
+                <a href="#services" class="block px-3 py-3 text-gray-800 hover:text-gold hover:bg-gray-50 font-bold rounded-md text-lg dark:hover:bg-gray-800 dark:text-gray-100">خدماتنا</a>
+                <a href="#portfolio" class="block px-3 py-3 text-gray-800 hover:text-gold hover:bg-gray-50 font-bold rounded-md text-lg dark:hover:bg-gray-800 dark:text-gray-100">أعمالنا</a>
+                <a href="#contact" class="block px-3 py-3 text-gray-800 hover:text-gold hover:bg-gray-50 font-bold rounded-md text-lg dark:hover:bg-gray-800 dark:text-gray-100">اتصل بنا</a>
             </div>
         </div>
     </nav>
@@ -265,7 +291,7 @@
         </div>
     </section>
 
-    <section id="services" class="py-24 bg-gray-50 relative">
+    <section id="services" class="py-24 bg-gray-50 relative dark:bg-[#141414]">
         <div class="absolute top-0 right-0 w-64 h-64 bg-gold rounded-bl-full opacity-5 pointer-events-none"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -275,57 +301,57 @@
                     <h2 class="text-gold font-bold text-xl tracking-wider">مجالات التخصص</h2>
                     <div class="h-px w-12 bg-gold"></div>
                 </div>
-                <h3 class="text-4xl md:text-5xl font-bold text-dark mb-6">خدماتنا المتميزة</h3>
-                <p class="text-gray-600 text-lg md:text-xl">
+                <h3 class="text-4xl md:text-5xl font-bold text-dark mb-6 dark:text-white">خدماتنا المتميزة</h3>
+                <p class="text-gray-600 text-lg md:text-xl dark:text-gray-300">
                     نقدم مجموعة متكاملة من الخدمات الهندسية لتغطية كافة احتياجات مشروعك، من الفكرة وحتى التسليم النهائي.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
-                <div class="bg-white rounded-2xl p-10 text-center shadow-lg border border-gray-100 transition-all duration-300 card-hover group relative overflow-hidden">
+                <div class="bg-white rounded-2xl p-10 text-center shadow-lg border border-gray-100 transition-all duration-300 card-hover group relative overflow-hidden dark:bg-[#1e1e1e] dark:border-gray-800">
                     <div class="absolute top-0 left-0 w-full h-2 bg-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-right"></div>
-                    <div class="w-24 h-24 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-8 group-hover:bg-gold transition-colors duration-500 text-gold group-hover:text-white shadow-inner">
+                    <div class="w-24 h-24 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-8 group-hover:bg-gold transition-colors duration-500 text-gold group-hover:text-white shadow-inner dark:bg-gray-800">
                         <i class="fa-solid fa-pen-ruler text-4xl"></i>
                     </div>
-                    <h4 class="text-2xl font-bold text-dark mb-4 group-hover:text-gold transition-colors">تصميم داخلي</h4>
-                    <p class="text-gray-600 leading-relaxed">
+                    <h4 class="text-2xl font-bold text-dark mb-4 group-hover:text-gold transition-colors dark:text-white">تصميم داخلي</h4>
+                    <p class="text-gray-600 leading-relaxed dark:text-gray-300">
                         نقدم تصاميم مبتكرة وعصرية تعكس شخصيتك وتستغل المساحات بأفضل شكل ممكن لتوفير الراحة والجمالية العالية في كل ركن.
                     </p>
                 </div>
 
-                <div class="bg-white rounded-2xl p-10 text-center shadow-lg border border-gray-100 transition-all duration-300 card-hover group relative overflow-hidden">
+                <div class="bg-white rounded-2xl p-10 text-center shadow-lg border border-gray-100 transition-all duration-300 card-hover group relative overflow-hidden dark:bg-[#1e1e1e] dark:border-gray-800">
                     <div class="absolute top-0 left-0 w-full h-2 bg-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-right"></div>
-                    <div class="w-24 h-24 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-8 group-hover:bg-gold transition-colors duration-500 text-gold group-hover:text-white shadow-inner">
+                    <div class="w-24 h-24 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-8 group-hover:bg-gold transition-colors duration-500 text-gold group-hover:text-white shadow-inner dark:bg-gray-800">
                         <i class="fa-solid fa-couch text-4xl"></i>
                     </div>
-                    <h4 class="text-2xl font-bold text-dark mb-4 group-hover:text-gold transition-colors">أثاث ومفروشات</h4>
-                    <p class="text-gray-600 leading-relaxed">
+                    <h4 class="text-2xl font-bold text-dark mb-4 group-hover:text-gold transition-colors dark:text-white">أثاث ومفروشات</h4>
+                    <p class="text-gray-600 leading-relaxed dark:text-gray-300">
                         نساعدك في اختيار وتصميم قطع الأثاث التي تتناسب مع الهوية البصرية للتصميم العام، مع التركيز التام على الجودة والمتانة.
                     </p>
                 </div>
 
-                <div class="bg-white rounded-2xl p-10 text-center shadow-lg border border-gray-100 transition-all duration-300 card-hover group relative overflow-hidden">
+                <div class="bg-white rounded-2xl p-10 text-center shadow-lg border border-gray-100 transition-all duration-300 card-hover group relative overflow-hidden dark:bg-[#1e1e1e] dark:border-gray-800">
                     <div class="absolute top-0 left-0 w-full h-2 bg-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-right"></div>
-                    <div class="w-24 h-24 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-8 group-hover:bg-gold transition-colors duration-500 text-gold group-hover:text-white shadow-inner">
+                    <div class="w-24 h-24 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-8 group-hover:bg-gold transition-colors duration-500 text-gold group-hover:text-white shadow-inner dark:bg-gray-800">
                         <i class="fa-solid fa-trowel-bricks text-4xl"></i>
                     </div>
-                    <h4 class="text-2xl font-bold text-dark mb-4 group-hover:text-gold transition-colors">تأسيس معماري</h4>
-                    <p class="text-gray-600 leading-relaxed">
+                    <h4 class="text-2xl font-bold text-dark mb-4 group-hover:text-gold transition-colors dark:text-white">تأسيس معماري</h4>
+                    <p class="text-gray-600 leading-relaxed dark:text-gray-300">
                         نبني أساساً قوياً ومدروساً. نقوم بكافة أعمال التأسيس المعماري وفق أعلى المعايير الهندسية لضمان سلامة واستدامة المنشأة.
                     </p>
                 </div>
 
             </div>
 
-            <div class="mt-16 bg-white rounded-2xl p-8 shadow-xl border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="mt-16 bg-white rounded-2xl p-8 shadow-xl border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6 dark:bg-[#1e1e1e] dark:border-gray-800">
                 <div class="flex items-center gap-6">
                     <div class="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center text-gold shrink-0">
                         <i class="fa-solid fa-medal text-3xl"></i>
                     </div>
                     <div>
-                        <h4 class="text-2xl font-bold text-dark">تشطيب كامل تسليم مفتاح</h4>
-                        <p class="text-gray-600 mt-1">راحة بالك هي أولويتنا، نتولى كافة التفاصيل من البداية للنهاية.</p>
+                        <h4 class="text-2xl font-bold text-dark dark:text-white">تشطيب كامل تسليم مفتاح</h4>
+                        <p class="text-gray-600 mt-1 dark:text-gray-300">راحة بالك هي أولويتنا، نتولى كافة التفاصيل من البداية للنهاية.</p>
                     </div>
                 </div>
                 <div class="text-center md:text-left">
@@ -337,7 +363,7 @@
         </div>
     </section>
 
-    <section id="portfolio" class="py-24 bg-white relative">
+    <section id="portfolio" class="py-24 bg-white relative dark:bg-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <div class="flex items-center justify-center gap-4 mb-4">
@@ -345,8 +371,8 @@
                     <h2 class="text-gold font-bold text-xl tracking-wider">أعمالنا السابقة</h2>
                     <div class="h-px w-12 bg-gold"></div>
                 </div>
-                <h3 class="text-4xl md:text-5xl font-bold text-dark mb-6">معرض الصور</h3>
-                <p class="text-gray-600 text-lg md:text-xl">
+                <h3 class="text-4xl md:text-5xl font-bold text-dark mb-6 dark:text-white">معرض الصور</h3>
+                <p class="text-gray-600 text-lg md:text-xl dark:text-gray-300">
                     جولة بصرية في بعض مشاريعنا السابقة التي قمنا بتصميمها وتنفيذها بأعلى معايير الجودة.
                 </p>
             </div>
@@ -403,7 +429,7 @@
                         <h2 class="text-gold font-bold text-xl tracking-wider">شاهد أعمالنا</h2>
                         <div class="h-px w-12 bg-gold"></div>
                     </div>
-                    <h3 class="text-3xl md:text-4xl font-bold text-dark">فيديوهات من مشاريعنا</h3>
+                    <h3 class="text-3xl md:text-4xl font-bold text-dark dark:text-white">فيديوهات من مشاريعنا</h3>
                 </div>
 
                 <div class="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 no-scrollbar lg:mx-0 lg:px-0 lg:pb-0 lg:grid lg:grid-cols-5 lg:gap-6 lg:overflow-visible">
@@ -620,7 +646,7 @@
                     </div>
                     <div>
                         <div class="font-bold text-lg text-white font-en">ElKholy</div>
-                        <div class="text-xs text-gray-500 tracking-widest uppercase font-en">Interior Design</div>
+                        <div class="text-xs text-gray-500 tracking-widest uppercase font-en dark:text-gray-400">Interior Design</div>
                     </div>
                 </div>
 
@@ -739,15 +765,33 @@
         // Navbar blur, shrink effect on scroll
         const nav = document.querySelector('nav');
         
-        window.addEventListener('scroll', () => {
+        function updateNav() {
             if (window.scrollY > 20) {
                 nav.classList.add('shadow-md', 'scrolled');
-                nav.style.background = 'rgba(255, 255, 255, 0.98)';
             } else {
                 nav.classList.remove('shadow-md', 'scrolled');
-                nav.style.background = 'rgba(255, 255, 255, 0.95)';
             }
-        });
+        }
+        window.addEventListener('scroll', updateNav);
+        updateNav();
+
+        // الوضع الفاتح / الداكن
+        (function () {
+            const root = document.documentElement;
+            document.querySelectorAll('.theme-toggle').forEach(function (b) {
+                b.addEventListener('click', function () {
+                    const dark = !root.classList.contains('dark');
+                    root.classList.toggle('dark', dark);
+                    try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+                });
+            });
+            // لو الشخص ما اختارش بنفسه، اتبع إعداد الجهاز
+            try {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+                    if (!localStorage.getItem('theme')) root.classList.toggle('dark', e.matches);
+                });
+            } catch (e) {}
+        })();
     </script>
 <!-- ===== مشغل الفيديو ===== -->
 <div id="video-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-label="مشغل الفيديو">

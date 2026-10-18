@@ -636,9 +636,9 @@
                             <textarea id="details" rows="4" class="w-full bg-gray-800/50 text-white border border-gray-700 rounded-xl px-5 py-4 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all resize-none"></textarea>
                         </div>
                         
-                        <button type="submit" class="w-full bg-gold hover:bg-goldHover text-white font-bold text-xl py-4 rounded-xl transition duration-300 shadow-[0_4px_14px_0_rgba(184,151,107,0.39)] hover:shadow-[0_6px_20px_rgba(184,151,107,0.23)] hover:-translate-y-1 flex justify-center items-center gap-2">
-                            <span>إرسال الطلب للإيميل</span>
-                            <i class="fa-solid fa-paper-plane"></i>
+                        <button type="submit" class="w-full bg-[#25D366] hover:bg-[#1ebe5a] text-white font-bold text-xl py-4 rounded-xl transition duration-300 shadow-[0_4px_14px_0_rgba(37,211,102,0.4)] hover:shadow-[0_6px_20px_rgba(37,211,102,0.3)] hover:-translate-y-1 flex justify-center items-center gap-2">
+                            <span>إرسال عبر واتساب</span>
+                            <i class="fa-brands fa-whatsapp text-2xl"></i>
                         </button>
                         
                         <div id="successMsg" class="hidden text-center p-4 bg-green-900/30 border border-green-500/50 rounded-xl text-green-400 font-semibold mt-4">
@@ -689,73 +689,46 @@
     </section>
 
     <script>
-        // Form Submission Logic (Sending to Email via FormSubmit AJAX)
+        // إرسال الطلب مباشرة عبر واتساب على نفس الرقم الموجود بالموقع (01021805638)
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const btn = this.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
-            document.getElementById('successMsg').classList.add('hidden');
-            document.getElementById('errorMsg').classList.add('hidden');
-            
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري إرسال الطلب...';
-            btn.disabled = true;
-            
-            // تجميع بيانات العميل من الفورم
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
+            const successEl = document.getElementById('successMsg');
+            const errorEl = document.getElementById('errorMsg');
+            successEl.classList.add('hidden');
+            errorEl.classList.add('hidden');
+
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
             const typeSelect = document.getElementById('project-type');
             const type = typeSelect.options[typeSelect.selectedIndex].text;
-            const details = document.getElementById('details').value;
+            const details = document.getElementById('details').value.trim();
 
-            // إرسال البيانات للإيميل باستخدام FormSubmit
-            fetch("https://formsubmit.co/ajax/yousefmohamedfawzy848@gmail.com", {
-                method: "POST",
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    _subject: "طلب معاينة جديد - موقع إسلام الخولي",
-                    الاسم: name,
-                    رقم_الهاتف: phone,
-                    نوع_المشروع: type,
-                    تفاصيل_إضافية: details || "لا يوجد"
-                })
-            })
-            .then(response => response.json().then(data => ({ response, data })))
-            .then(({ response, data }) => {
-                if (!response.ok || (data.success !== true && data.success !== 'true')) {
-                    throw new Error(data.message || `Request failed with status ${response.status}`);
-                }
-                return data;
-            })
-            .then(data => {
-                if (data.success === false || data.success === 'false') {
-                    throw new Error(data.message || 'Form submission was rejected');
-                }
+            if (!name || !phone) {
+                errorEl.textContent = 'من فضلك أدخل الاسم ورقم الهاتف.';
+                errorEl.classList.remove('hidden');
+                return;
+            }
 
-                // إعادة الزر لشكله الطبيعي وإظهار رسالة النجاح
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                this.reset();
-                
-                const msg = document.getElementById('successMsg');
-                msg.classList.remove('hidden');
-                
-                setTimeout(() => {
-                    msg.classList.add('hidden');
-                }, 5000);
-            })
-            .catch(error => {
-                console.error(error);
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                const errorMsg = document.getElementById('errorMsg');
-                errorMsg.textContent = location.protocol === 'file:'
-                    ? 'الفورم بيشتغل بس بعد رفع الموقع على استضافة (مش من الملف على الجهاز).'
-                    : `تعذر إرسال الطلب: ${error.message || 'حاول مرة أخرى.'}`;
-                errorMsg.classList.remove('hidden');
-            });
+            const lines = [
+                'مرحبا أستاذ إسلام 👋',
+                'طلب معاينة جديد من موقع Elkholy Interior Design:',
+                '',
+                '• الاسم: ' + name,
+                '• رقم الهاتف: ' + phone,
+                '• نوع المشروع: ' + type,
+                '• تفاصيل إضافية: ' + (details || 'لا يوجد')
+            ];
+            const msg = lines.join('\n');
+            // نفس الرقم الظاهر في الموقع: 01021805638 بصيغة دولية للواتساب
+            const waNumber = '201021805638';
+            const waUrl = 'https://wa.me/' + waNumber + '?text=' + encodeURIComponent(msg);
+
+            window.open(waUrl, '_blank', 'noopener');
+
+            successEl.textContent = 'سيتم فتح واتساب الآن بالرسالة الجاهزة — اضغط إرسال هناك لإتمام الطلب.';
+            successEl.classList.remove('hidden');
+            this.reset();
+            setTimeout(function() { successEl.classList.add('hidden'); }, 7000);
         });
 
         // Mobile Menu Toggle
